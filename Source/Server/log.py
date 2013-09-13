@@ -14,9 +14,9 @@ def init_log(name):
     fh = logging.FileHandler('server.log')
     fh.setLevel(logging.DEBUG)
 
-    # Log to console (threshold=ERROR)
+    # Log to console (threshold=DEBUG)
     ch = logging.StreamHandler()
-    ch.setLevel(logging.ERROR)
+    ch.setLevel(logging.DEBUG)
 
     # Format for log entries
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

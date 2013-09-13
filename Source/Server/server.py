@@ -1,12 +1,13 @@
 # Server with multiple connections
 import socket
 import threading
+from collections import deque
 
 # Logging Settings
 from log import init_log
 
 # for Message, Channel, User
-from messaging import Message, Channel, User
+from message import Message, Channel, User
 
 
 
@@ -27,20 +28,23 @@ s.listen(5)
 running = True
 
 def serve_client(sock):
-    # only for testing purpose
-    log.debug('serve_client thread started:')
-    message = bytes()
+    # Queue of Message objects
+    msgQueue = deque()
+
+    # Buffer for incoming data
+    msgBuffer = bytes()
+
+    # required length to process buffer
+    reqLength = 0
+
     while True:
-        data = sock.recv(1024)
-        message += data
+        data = sock.recv(8192)
+        msgBuffer += data
 
         if not data:  # closed socket returns 0 bytes (False) -> exit while loop
             break
 
     sock.close()
-    log.debug('Received data: ' + message.decode(encoding='utf-8'))
-
-
 
 while running:
     # accept connection
@@ -49,8 +53,7 @@ while running:
     log.debug(str(address[0]) + ' on port ' + str(address[1]))
 
     # serve client in thread and continue accepting client connections
-    fred = threading.Thread(target=serve_client, args=(connection,))
-    fred.start()
-    #FIXME: Name
+    serveThread = threading.Thread(target=serve_client, args=(connection,))
+    serveThread.start()
 
 s.close()
