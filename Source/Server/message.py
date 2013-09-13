@@ -1,4 +1,8 @@
 # Represent sent messages / channels / users
+from log import init_log
+
+# Logging settings
+log = init_log(__name__)
 
 class Message:
     def __init__(self, options='', message=''):
@@ -42,7 +46,8 @@ class Message:
 
     def handle(self):
         # execute command, deliver message, broadcast to channel, etc.
-        pass
+        log.debug(self.options)
+        log.debug(self.message)
 
 class Channel:
     def __init__(self):

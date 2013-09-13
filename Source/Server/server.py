@@ -7,7 +7,7 @@ from collections import deque
 from log import init_log
 
 # for Message, Channel, User
-from message import Message, Channel, User
+from message import Message
 
 
 
@@ -34,17 +34,51 @@ def serve_client(sock):
     # Buffer for incoming data
     msgBuffer = bytes()
 
-    # required length to process buffer
-    reqLength = 0
-
+    # Receive loop
     while True:
         data = sock.recv(8192)
         msgBuffer += data
+
+        # msgBuffer processing loop
+        while len(msgBuffer) > 0:
+            if len(msgBuffer) >= 8:
+                # calculate required length to process buffer
+                optionSize = int.from_bytes(msgBuffer[0:4], byteorder='big')
+                messageSize = int.from_bytes(msgBuffer[4:8], byteorder='big')
+                reqLength = 8 + optionSize + messageSize
+
+                # process buffer or return
+                if len(msgBuffer) >= reqLength:
+                    # create new Message
+                    newMsg = Message()
+                    newMsg.from_bytes(msgBuffer[:reqLength])
+
+                    # append Message to Message Queue
+                    msgQueue.append(newMsg)
+
+                    # remove bytes from buffer
+                    msgBuffer = msgBuffer[reqLength:]
+                else:
+                    break
+            else:
+                break
+
+        # handle messages in Queue loop
+        while True:
+            if len(msgQueue) > 0:
+                msg = msgQueue.popleft()
+
+                # start thread to process message
+                processMsg = threading.Thread(target=msg.handle)
+                processMsg.start()
+            else:
+                break
 
         if not data:  # closed socket returns 0 bytes (False) -> exit while loop
             break
 
     sock.close()
+    log.debug('Socket closed')
 
 while running:
     # accept connection
