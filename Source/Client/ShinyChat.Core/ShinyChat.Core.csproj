@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B2E5AEEB-854A-4D67-9356-011ABCD55B2E}</ProjectGuid>
+    <ProjectGuid>{4DE7F0E0-6C65-4CDA-9D72-47CB4A6A66FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShinyChat.Common</RootNamespace>
-    <AssemblyName>ShinyChat.Common</AssemblyName>
+    <RootNamespace>ShinyChat.Core</RootNamespace>
+    <AssemblyName>ShinyChat.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,14 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\CommandType.cs" />
-    <Compile Include="Entities\IChannel.cs" />
-    <Compile Include="Entities\IServerMessage.cs" />
-    <Compile Include="Entities\IMessageLog.cs" />
-    <Compile Include="Entities\IViewMessage.cs" />
-    <Compile Include="Entities\MessageType.cs" />
-    <Compile Include="Managers\IMessageBuilder.cs" />
+    <Compile Include="Entities\Channel.cs" />
+    <Compile Include="Entities\Command.cs" />
+    <Compile Include="Entities\CommandResponse.cs" />
+    <Compile Include="Entities\MessageLog.cs" />
+    <Compile Include="Entities\ServerMessage.cs" />
+    <Compile Include="Entities\ViewMessage.cs" />
+    <Compile Include="Managers\MessageBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShinyChat.Common\ShinyChat.Common.csproj">
+      <Project>{B2E5AEEB-854A-4D67-9356-011ABCD55B2E}</Project>
+      <Name>ShinyChat.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

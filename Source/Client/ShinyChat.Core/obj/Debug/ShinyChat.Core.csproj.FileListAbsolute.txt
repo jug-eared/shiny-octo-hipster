@@ -1,0 +1,14 @@
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\obj\Debug\ShinyChat.Core.csprojResolveAssemblyReference.cache
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\bin\Debug\ShinyChat.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\bin\Debug\ShinyChat.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\bin\Debug\ShinyChat.Common.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\bin\Debug\ShinyChat.Common.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\obj\Debug\ShinyChat.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat\ShinyChat.Core\obj\Debug\ShinyChat.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\obj\Debug\ShinyChat.Core.csprojResolveAssemblyReference.cache
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\obj\Debug\ShinyChat.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\obj\Debug\ShinyChat.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Common.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Common.pdb
