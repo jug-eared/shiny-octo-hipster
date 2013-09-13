@@ -5,7 +5,14 @@ using System.Text;
 
 namespace ShinyChat.Common.Entities
 {
-    enum MessageType
+    public partial class Enums
     {
+        public enum MessageType
+        {
+            Undefined = 0,
+            Message = 1,
+            Command = 2,
+            Response = 3,
+        }
     }
 }

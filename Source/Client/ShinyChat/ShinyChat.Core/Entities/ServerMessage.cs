@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ShinyChat.Common.Entities;
 
-namespace ShinyChat.Core.Entities
+namespace ShinyChat.Common.Entities
 {
-    public class CommandResponse : IServerMessage
+    public class ServerMessage : IServerMessage
     {
         public uint OptionsSize
         {

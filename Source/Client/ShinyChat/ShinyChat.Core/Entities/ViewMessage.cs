@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ShinyChat.Common.Entities
+namespace ShinyChat.Core.Entities
 {
-    interface IMessage
+    class ViewMessage
     {
     }
 }

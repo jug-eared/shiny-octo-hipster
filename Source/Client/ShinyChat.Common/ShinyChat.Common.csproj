@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>be994253-af1e-43b0-a0f1-85753b45401f</ProjectGuid>
+    <ProjectGuid>{B2E5AEEB-854A-4D67-9356-011ABCD55B2E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShinyChat.Common</RootNamespace>
@@ -40,9 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Entities\CommandType.cs" />
+    <Compile Include="Entities\IChannel.cs" />
+    <Compile Include="Entities\IServerMessage.cs" />
+    <Compile Include="Entities\IMessageLog.cs" />
+    <Compile Include="Entities\IViewMessage.cs" />
+    <Compile Include="Entities\MessageType.cs" />
+    <Compile Include="Managers\IMessageBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

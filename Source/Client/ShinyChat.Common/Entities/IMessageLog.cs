@@ -5,7 +5,8 @@ using System.Text;
 
 namespace ShinyChat.Common.Entities
 {
-    interface ICommand
+    public interface IMessageLog
     {
+        List<IViewMessage> Messages { get; set; }
     }
 }

@@ -5,7 +5,10 @@ using System.Text;
 
 namespace ShinyChat.Common.Entities
 {
-    interface IChannel
+    public interface IChannel
     {
+        string Name { get; set; }
+        IMessageLog MessageLog { get; set; }
+        bool IsOpened { get; set; }
     }
 }

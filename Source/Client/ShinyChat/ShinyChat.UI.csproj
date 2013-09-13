@@ -92,6 +92,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShinyChat.Common\ShinyChat.Common.csproj">
+      <Project>{B2E5AEEB-854A-4D67-9356-011ABCD55B2E}</Project>
+      <Name>ShinyChat.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="ShinyChat.Core\ShinyChat.Core.csproj">
+      <Project>{4DE7F0E0-6C65-4CDA-9D72-47CB4A6A66FD}</Project>
+      <Name>ShinyChat.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
