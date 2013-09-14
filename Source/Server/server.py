@@ -40,7 +40,10 @@ def serve_client(connection, address):
 
     # Receive loop
     while True:
+        log.debug('receiving data')
         data = connection.recv(8192)
+        log.debug('received data')
+
         msgBuffer += data
 
         # msgBuffer processing loop
@@ -62,24 +65,22 @@ def serve_client(connection, address):
 
                     # remove bytes from buffer
                     msgBuffer = msgBuffer[reqLength:]
-                else:
-                    break
-            else:
-                break
+                else: break
+            else: break
 
         # handle messages in Queue loop
         while True:
             if len(msgQueue) > 0:
                 msg = msgQueue.popleft()
+                log.debug('POP Message')
 
                 # start thread to process message
                 processMsg = threading.Thread(target=msg.handle, args=(newUser,))
                 processMsg.start()
-            else:
-                break
+            else: break
 
-        if not data:  # closed socket returns 0 bytes (False) -> exit while loop
-            break
+        # closed socket returns 0 bytes (False) -> exit while loop
+        if not data: break
 
     connection.close()
     log.debug(str(address[0]) + ' on port ' + str(address[1]) + ' closed')
