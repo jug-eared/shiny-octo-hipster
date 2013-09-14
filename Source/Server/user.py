@@ -1,7 +1,9 @@
 # User
 from message import Message
 from channel import Channel, channelList
+from log import init_log # DEBUG
 
+log = init_log(__name__) # DEBUG
 
 class User:
     def __init__(self, connection, address, username=''):
@@ -20,7 +22,8 @@ class User:
         self.connection.sendall(data)
 
     def unsubscribe_all(self):
-        tempChannels = channelList
+        # copy channelList
+        tempChannels = dict(channelList)
 
         while True:
             try:

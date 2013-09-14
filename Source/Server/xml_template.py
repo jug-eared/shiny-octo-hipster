@@ -27,9 +27,9 @@ def xml_options(mapping):
     global template_options
     return template_options.substitute(mapping)
 
-def xml_message(msg):
+def xml_message(msgString):
     global template_message
     mapping = dict(
-        message=msg
+        message=msgString
         )
     return template_message.substitute(mapping)
