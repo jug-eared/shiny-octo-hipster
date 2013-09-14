@@ -7,6 +7,8 @@ using Castle.MicroKernel.Registration;
 using ShinyChat.Common.Entities;
 using ShinyChat.Core.Entities;
 using ShinyChat.Core.DI;
+using ShinyChat.Common.Logging;
+using ShinyChat.Core.Logging;
 
 namespace ShinyChat.Dependencies
 {
@@ -19,6 +21,9 @@ namespace ShinyChat.Dependencies
 
             // Register Id Counter
             DiContainer.Container.Register(Component.For<IInternalIdCounter>().ImplementedBy<InternalIdCounter>());
+
+            // Register LogManager
+            DiContainer.Container.Register(Component.For<ILoggingManager>().ImplementedBy<LoggingManager>());
         }
     }
 }

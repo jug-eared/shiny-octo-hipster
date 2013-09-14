@@ -56,6 +56,7 @@
     <Compile Include="Entities\MessageLog.cs" />
     <Compile Include="Entities\ServerMessage.cs" />
     <Compile Include="Entities\ViewMessage.cs" />
+    <Compile Include="Logging\LoggingManager.cs" />
     <Compile Include="Managers\MessageBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ChatServer.cs" />

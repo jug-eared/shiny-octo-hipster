@@ -11,6 +11,8 @@ using ShinyChat.Common.Entities;
 using System.IO;
 using System.Xml;
 using ShinyChat.Core.Entities;
+using ShinyChat.Core.DI;
+using ShinyChat.Common.Logging;
 
 namespace ShinyChat.Core.Server
 {
@@ -72,8 +74,8 @@ namespace ShinyChat.Core.Server
                 }
                 catch (Exception ex)
                 {
+                    DiContainer.Container.Resolve<ILoggingManager>().LogError("An error occurred while trying to connect to the server.", ex);
                     return false;
-                    // TODO Log Error
                 }
                 return true;
             }
@@ -93,8 +95,8 @@ namespace ShinyChat.Core.Server
                 }
                 catch (Exception ex)
                 {
+                    DiContainer.Container.Resolve<ILoggingManager>().LogError("An error occurred while trying to disconnect from the server.", ex);
                     return false;
-                    // TODO Log Error
                 }
                 return true;
             }
@@ -105,7 +107,6 @@ namespace ShinyChat.Core.Server
         {
             while (_connectionActive && _client.Connected)
             {
-                Thread.Sleep(100);
                 if (_client.GetStream().DataAvailable)
                 {
                     // Read Data from stream
@@ -131,8 +132,6 @@ namespace ShinyChat.Core.Server
                     _client.GetStream().Read(optionsBuffer, 0, (int)optionsSize);
                     _client.GetStream().Read(contentBuffer, 0, (int)contentSize);
 
-                    // TODO Convert Data to IServerMessage
-                    // -- -- -- XML Reader
                     var optionsText = System.Text.Encoding.UTF8.GetString(optionsBuffer);
                     var contentText = System.Text.Encoding.UTF8.GetString(contentBuffer);
 
@@ -168,17 +167,17 @@ namespace ShinyChat.Core.Server
                     catch(Exception ex)
                     {
                         // Corrupt document -- ignore
-                        // TODO Log Error
+                        DiContainer.Container.Resolve<ILoggingManager>().LogError("An error occurred while trying to parse response document from server.", ex);
                     }
 
                     IncomingMessages.Add(resultMessage);
 
-                    // TODO If message then notify subscribers
                     foreach (var subscriber in _subscribers)
                     {
                         subscriber.OnServerMessageReceived();
                     }
                 }
+                Thread.Sleep(100);
             }
         }
 
@@ -205,7 +204,7 @@ namespace ShinyChat.Core.Server
                 }
                 catch (Exception ex)
                 {
-                    // TODO Log Error
+                    DiContainer.Container.Resolve<ILoggingManager>().LogError("An error occurred while trying to send a message to the server.", ex);
                     return false;
                 }
                 return true;
