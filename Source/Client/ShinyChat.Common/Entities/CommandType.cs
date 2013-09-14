@@ -7,6 +7,9 @@ namespace ShinyChat.Common.Entities
 {
     public partial class Enums 
     {
+        /// <summary>
+        /// Gets the CommandType of a command message that is sent or received from server
+        /// </summary>
         public enum CommandType
         {
             Undefined = 0,
