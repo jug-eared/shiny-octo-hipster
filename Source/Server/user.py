@@ -2,8 +2,8 @@
 from message import Message
 
 class User:
-    def __init__(self, socket_, address, username=''):
-        self.socket_ = socket_
+    def __init__(self, connection, address, username=''):
+        self.connection = connection
         self.address = address
 
         if username == '':
@@ -11,5 +11,6 @@ class User:
         else:
             self.name = username
 
-    def send(msg):
-        socket_.sendall(msg.to_bytes())
+    def send(self, msg):
+        data = msg.to_bytes()
+        self.connection.sendall(data)

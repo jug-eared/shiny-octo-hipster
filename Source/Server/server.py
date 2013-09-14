@@ -8,6 +8,7 @@ from log import init_log
 
 # for Message, Channel, User
 from message import Message
+from user import User
 
 
 
@@ -28,6 +29,9 @@ s.listen(5)
 running = True
 
 def serve_client(connection, address):
+    # Create User
+    newUser = User(connection, address)
+
     # Queue of Message objects
     msgQueue = deque()
 
@@ -69,7 +73,7 @@ def serve_client(connection, address):
                 msg = msgQueue.popleft()
 
                 # start thread to process message
-                processMsg = threading.Thread(target=msg.handle, args=(connection, address))
+                processMsg = threading.Thread(target=msg.handle, args=(newUser,))
                 processMsg.start()
             else:
                 break
