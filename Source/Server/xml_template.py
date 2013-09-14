@@ -10,7 +10,9 @@ template_options = Template(
     '</options>'
     )
 
-template_message = Template('<message>${message}</message>')
+template_message = Template(
+    '<message>${message}</message>'
+    )
 
 
 # mapping example:
