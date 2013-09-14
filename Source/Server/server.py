@@ -78,7 +78,7 @@ def serve_client(connection, address):
             break
 
     connection.close()
-    log.debug(str(address[0]) + ' on port ' + str(address[1]) + 'closed')
+    log.debug(str(address[0]) + ' on port ' + str(address[1]) + ' closed')
 
 while running:
     # accept connection

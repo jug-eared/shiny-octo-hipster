@@ -5,11 +5,30 @@ import xml.etree.ElementTree as etree
 # Logging settings
 log = init_log(__name__)
 
+
+MESSAGE_TYPE = {
+    'UNDEFINED': '0',
+    'MESSAGE': '1',
+    'COMMAND': '2',
+    'RESPONSE': '3'
+}
+
+COMMAND_TYPE = {
+    'UNDEFINED': '0',
+    'JOIN_CHANNEL': '1',
+    'LEAVE_CHANNEL': '2',
+    'GET_CHANNELS': '3'
+}
+
+
 class Message:
     def __init__(self, options='', message=''):
         self.options = options
         self.message = message
         self.optionTags = dict()
+        self.messageTags = dict()
+
+        self.parse_tags()
 
     def from_bytes(self, bytes_):
         # Reset
@@ -32,10 +51,20 @@ class Message:
         self.options = options.decode(encoding='utf-8')
         self.message = message.decode(encoding='utf-8')
 
+        # Parse Options, Message XML
+        self.parse_tags()
 
-        # Parse XML Options
-        root = etree.fromstring(self.options)
-        self.optionTags = {child.tag: child.text for child in root}
+    def parse_tags(self):
+        # Parse Options
+        if self.options != '':
+            root = etree.fromstring(self.options)
+            self.optionTags = {child.tag: child.text for child in root}
+
+        # Parse Message
+        if self.message != '':
+            root = etree.fromstring(self.message)
+            self.messageTags = {child.tag: child.text for child in root}        
+
 
     def to_bytes(self):
         # encode blocks
@@ -55,3 +84,32 @@ class Message:
         # execute command, deliver message, broadcast to channel, etc.
         log.debug(self.options)
         log.debug(self.message)
+
+        msgType = self.optionTags['messageType']
+
+        if msgType == MESSAGE_TYPE['UNDEFINED']:
+            self.handle_undefined()
+        elif msgType == MESSAGE_TYPE['MESSAGE']:
+            self.handle_message()
+        elif msgType == MESSAGE_TYPE['COMMAND']:
+            self.handle_command()
+        elif msgType == MESSAGE_TYPE['RESPONSE']:
+            self.handle_response()
+        else:
+            log.warning('Message type unknown')
+
+    def handle_undefined(self):
+        log.debug('undefined')
+        pass
+
+    def handle_message(self):
+        log.debug('message')
+        pass
+
+    def handle_command(self):
+        log.debug('command')
+        pass
+
+    def handle_response(self):
+        log.debug('response')
+        pass
