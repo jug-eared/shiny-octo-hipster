@@ -1,6 +1,7 @@
 # Represent sent messages / channels / users
 from log import init_log
 import xml.etree.ElementTree as etree
+from channel import Channel, channelList
 
 # Logging settings
 log = init_log(__name__)
@@ -83,7 +84,7 @@ class Message:
 
         return retBytes
 
-    def handle(self, connection, address):
+    def handle(self, user):
         # execute command, deliver message, broadcast to channel, etc.
         log.debug(self.options)
         log.debug(self.message)
@@ -91,74 +92,84 @@ class Message:
         msgType = self.optionTags['messageType']
 
         if msgType == MESSAGE_TYPE['UNDEFINED']:
-            self.handle_undefined(connection, address)
+            self.handle_undefined(user)
         elif msgType == MESSAGE_TYPE['MESSAGE']:
-            self.handle_message(connection, address)
+            self.handle_message(user)
         elif msgType == MESSAGE_TYPE['COMMAND']:
-            self.handle_command(connection, address)
+            self.handle_command(user)
         elif msgType == MESSAGE_TYPE['RESPONSE']:
-            self.handle_response(connection, address)
+            self.handle_response(user)
         else:
             log.warning('Message type unknown')
 
 
     # Message Handler
 
-    def handle_undefined(self, connection, address):
+    def handle_undefined(self, user):
         log.debug('undefined')
         pass
 
-    def handle_message(self, connection, address):
+    def handle_message(self, user):
         log.debug('message')
-        pass
 
-    def handle_command(self, connection, address):
+        msgChannel = self.optionTags['channel']
+        channelList[msgChannel].broadcast(self)
+
+    def handle_command(self, user):
         log.debug('command')
 
         command = self.optionTags['command']
 
         if command == COMMAND_TYPE['UNDEFINED']:
-            self.command_undefined(connection, address)
+            self.command_undefined(user)
         elif command == COMMAND_TYPE['JOIN_CHANNEL']:
-            self.command_join_channel(connection, address)
+            self.command_join_channel(user)
         elif command == COMMAND_TYPE['LEAVE_CHANNEL']:
-            self.command_leave_channel(connection, address)
+            self.command_leave_channel(user)
         elif command == COMMAND_TYPE['GET_CHANNELS']:
-            self.command_get_channels(connection, address)
+            self.command_get_channels(user)
         elif command == COMMAND_TYPE['GET_USER']:
-            self.command_get_users(connection, address)
+            self.command_get_users(user)
         elif command == COMMAND_TYPE['USER_JOINS']:
-            self.command_user_joins(connection, address)
+            self.command_user_joins(user)
         elif command == COMMAND_TYPE['USER_LEAVES']:
-            self.command_user_leaves(connection, address)
+            self.command_user_leaves(user)
         else:
             log.warning('unknown command')
 
-    def handle_response(self, connection, address):
+    def handle_response(self, user):
         log.debug('response')
         pass
 
 
     # COMMANDS
 
-    def command_undefined(self, connection, address):
+    def command_undefined(self, user):
         pass
 
-    def command_join_channel(self, connection, address):
+    def command_join_channel(self, user):
         log.debug('command join channel')
+        channelRequest = self.optionTags['channel']
+
+        if channelRequest in channelList:
+            channelList[channelRequest].subscribe(user)
+            log.debug('subscribed to channel ' + channelRequest)
+        else:
+            log.debug('creating channel:' + channelRequest)
+            Channel(channelRequest)
+            channelList[channelRequest].subscribe(user)
+
+    def command_leave_channel(self, user):
         pass
 
-    def command_leave_channel(self, connection, address):
+    def command_get_channels(self, user):
         pass
 
-    def command_get_channels(self, connection, address):
+    def command_get_users(self, user):
         pass
 
-    def command_get_users(self, connection, address):
+    def command_user_joins(self, user):
         pass
 
-    def command_user_joins(self, connection, address):
-        pass
-
-    def command_user_leaves(self, connection, address):
+    def command_user_leaves(self, user):
         pass

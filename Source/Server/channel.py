@@ -1,3 +1,5 @@
+import threading
+
 channelList = dict()
 
 class Channel:
@@ -19,5 +21,6 @@ class Channel:
         self.subscribers.remove(user)
 
     def broadcast(self, msg):
-        for user in subscribers:
-            user.send(msg)
+        for user in self.subscribers:
+            sendThread = threading.Thread(target=user.send, args=(msg,))
+            sendThread.start()
