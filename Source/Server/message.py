@@ -165,6 +165,7 @@ class Message:
         else:
             pass
 
+    # Test required
     def command_get_channels(self, user):
         chNameString = ';'.join(channelNames)
 
@@ -182,6 +183,7 @@ class Message:
         newMsg = Message(xml_options(optionDict), xml_message(chNameString))
         user.send(newMsg)
 
+    # Test required
     def command_get_users(self, user):
         userNames = (user.name for user in channelList[self.optionTags['channel']])
         userNameString = ';'.joins(userNames)

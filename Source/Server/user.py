@@ -1,9 +1,6 @@
 # User
 from message import Message
 from channel import Channel, channelList
-from log import init_log # DEBUG
-
-log = init_log(__name__) # DEBUG
 
 class User:
     def __init__(self, connection, address, username=''):
