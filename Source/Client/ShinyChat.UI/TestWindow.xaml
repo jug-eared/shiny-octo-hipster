@@ -1,0 +1,17 @@
+﻿<Window x:Class="ShinyChat.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TestWindow" Height="300" Width="300"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <StackPanel>
+            <Button Name="ConnectToServerBtn" Content="Connect" Height="20" Width="100" Click="ConnectToServerBtn_Click" />
+            <Button Name="DisconnectFromServerBtn" Content="Disconnect" Height="20" Width="100" Click="DisconnectFromServerBtn_Click"></Button>
+            <TextBox Name="JoinChannelText" />
+            <Button Name="JoinChannelBtn" Click="JoinChannelBtn_Click" Height="20" Width="100" Content="Join Channel" />
+            <TextBox Name="SendMessageText" />
+            <Button Name="SendToServerBtn" Click="SendToServerBtn_Click" Height="20" Width="100" Content="Send Message" />
+            <TextBox Name="MessageReceivedTxt" Text="{Binding Path=MessageReceivedText}" />
+        </StackPanel>
+    </Grid>
+</Window>
