@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using ShinyChat.Common;
 using System.Net;
+using System.Net.Sockets;
+using ShinyChat.Common.Server;
 
 namespace ShinyChat.Core.Server
 {
     public class ChatServer : IChatServer
     {
+        public ChatServer()
+        {
+            _client = new TcpClient();
+            _subscribers = new List<IServerSubscriber>();
+        }
+
+        private TcpClient _client;
+        private List<IServerSubscriber> _subscribers;
+
         public int Port
         {
             get;
@@ -29,35 +40,60 @@ namespace ShinyChat.Core.Server
 
         public AsyncCallback MessageReceived
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
-
-        public bool StartListen()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool StopListen()
-        {
-            throw new NotImplementedException();
-        }
-
 
         public bool OpenConnection()
         {
-            throw new NotImplementedException();
+            if (Endpoint != null && _client != null)
+            {
+                try
+                {
+                    _client.Connect(Endpoint);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                    // TODO Log Error
+                }
+                return true;
+            }
+            return false;
         }
 
         public bool CloseConnection()
         {
-            throw new NotImplementedException();
+            if (_client != null && _client.Connected)
+            {
+                try
+                {
+                    _client.Close();
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                    // TODO Log Error
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void SocketListener()
+        {
+            // TODO If message then notify subscribers
+        }
+
+        public void Subscribe(IServerSubscriber subscriber)
+        {
+            _subscribers.Add(subscriber);
+        }
+
+        public void Unsubscribe(IServerSubscriber subscriber)
+        {
+            if (_subscribers.Contains(subscriber))
+                _subscribers.Remove(subscriber);
         }
     }
 }
