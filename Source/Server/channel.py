@@ -18,7 +18,8 @@ class Channel:
         self.subscribers.add(user)
 
     def unsubscribe(self, user):
-        self.subscribers.remove(user)
+        if user in self.subscribers:
+            self.subscribers.remove(user)
 
     def get_subscribers(self):
         return self.subscribers

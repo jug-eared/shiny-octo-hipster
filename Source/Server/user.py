@@ -1,5 +1,7 @@
 # User
 from message import Message
+from channel import Channel, channelList
+
 
 userPool = set()
 
@@ -18,5 +20,16 @@ class User:
         userPool.add(self)
 
     def send(self, msg):
-        data = msg.to_bytes()
-        self.connection.sendall(data)
+        if self in userPool:
+            data = msg.to_bytes()
+            self.connection.sendall(data)
+
+    def unsubscribe_all(self):
+        tempChannels = channelList
+
+        while True:
+            try:
+                chName, ch = tempChannels.popitem()
+            except KeyError:
+                break
+            ch.unsubscribe(self)

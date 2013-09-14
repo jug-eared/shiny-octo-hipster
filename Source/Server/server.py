@@ -82,6 +82,7 @@ def serve_client(connection, address):
         # closed socket returns 0 bytes (False) -> exit while loop
         if not data: break
 
+    newUser.unsubscribe_all()
     connection.close()
     log.debug(str(address[0]) + ' on port ' + str(address[1]) + ' closed')
 
