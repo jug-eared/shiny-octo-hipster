@@ -10,6 +10,7 @@ using System.Threading;
 using ShinyChat.Common.Entities;
 using System.IO;
 using System.Xml;
+using ShinyChat.Core.Entities;
 
 namespace ShinyChat.Core.Server
 {
@@ -19,13 +20,20 @@ namespace ShinyChat.Core.Server
         {
             _client = new TcpClient();
             _subscribers = new List<IServerSubscriber>();
+            KnownChannels = new List<IChannel>();
         }
 
-        private TcpClient _client;
+        public TcpClient _client;
         private List<IServerSubscriber> _subscribers;
         private bool _connectionActive;
 
-        public IEnumerable<IServerMessage> IncomingMessages
+        public List<IChannel> KnownChannels
+        {
+            get;
+            set;
+        }
+
+        public List<IServerMessage> IncomingMessages
         {
             get;
             set;
@@ -59,6 +67,8 @@ namespace ShinyChat.Core.Server
                     _connectionActive = true;
                     IncomingMessages = new List<IServerMessage>();
                     _subscribers = new List<IServerSubscriber>();
+                    var listenerThread = new Thread(new ThreadStart(SocketListener));
+                    listenerThread.Start();
                 }
                 catch (Exception ex)
                 {
@@ -105,8 +115,14 @@ namespace ShinyChat.Core.Server
                     _client.GetStream().Read(optionsSizeBuffer, 0, 4);
                     _client.GetStream().Read(contentSizeBuffer, 0, 4);
 
-                    var optionsSize = Convert.ToUInt32(optionsSizeBuffer);
-                    var contentSize = Convert.ToUInt32(contentSizeBuffer);
+                    if (BitConverter.IsLittleEndian)
+                    {
+                        Array.Reverse(optionsSizeBuffer, 0, optionsSizeBuffer.Length);
+                        Array.Reverse(contentSizeBuffer, 0, contentSizeBuffer.Length);
+                    }
+
+                    var optionsSize = (uint)BitConverter.ToInt32(optionsSizeBuffer, 0);
+                    var contentSize = (uint)BitConverter.ToInt32(contentSizeBuffer, 0);
 
                     var optionsBuffer = new byte[optionsSize];
                     var contentBuffer = new byte[contentSize];
@@ -128,11 +144,26 @@ namespace ShinyChat.Core.Server
                     var resultMessage = new ServerMessage();
                     try
                     {
-                        resultMessage.Id = Convert.ToUInt32(optionsDoc.SelectSingleNode(@"\options\id").InnerText);
-                        resultMessage.MessageType = (Enums.MessageType)Convert.ToInt32(optionsDoc.SelectSingleNode(@"\options\messageType").InnerText);
-                        var commandInnerText = optionsDoc.SelectSingleNode(@"\options\command").InnerText;
+                        resultMessage.Id = Convert.ToUInt32(optionsDoc.SelectSingleNode(@"/options/id").InnerText);
+                        resultMessage.MessageType = (Enums.MessageType)Convert.ToInt32(optionsDoc.SelectSingleNode(@"/options/messageType").InnerText);
+                        var commandInnerText = optionsDoc.SelectSingleNode(@"/options/command").InnerText;
                         if (!string.IsNullOrEmpty(commandInnerText)) resultMessage.CommandType = (Enums.CommandType)Convert.ToUInt32(commandInnerText);
-                        
+                        var channelName = optionsDoc.SelectSingleNode(@"/options/channel").InnerText;
+                        var existingChannels = KnownChannels.Where(p => p.Name == channelName);
+
+                        if (existingChannels.Any())
+                            resultMessage.Channel = existingChannels.First();
+                        else
+                        {
+                            var channel = new Channel() { IsOpened = false, Name = channelName, MessageLog = new MessageLog() };
+                            resultMessage.Channel = channel;
+                            KnownChannels.Add(channel);
+                        }
+
+                        resultMessage.User = optionsDoc.SelectSingleNode(@"/options/user").InnerText;
+                        resultMessage.MessageContent = contentDoc.SelectSingleNode(@"/message").InnerText;
+                        resultMessage.OptionsSize = optionsSize;
+                        resultMessage.ContentSize = contentSize;
                     }
                     catch(Exception ex)
                     {
@@ -140,8 +171,7 @@ namespace ShinyChat.Core.Server
                         // TODO Log Error
                     }
 
-
-                    // TODO Store IServerMessage in List
+                    IncomingMessages.Add(resultMessage);
 
                     // TODO If message then notify subscribers
                     foreach (var subscriber in _subscribers)
@@ -170,8 +200,8 @@ namespace ShinyChat.Core.Server
             {
                 try
                 {
-                    // Dirty typecast (OH NOEZ AGAIN)
-                    _client.GetStream().Write(message.SerializedMessage, 0, 8 + (int)message.OptionsSize + (int)message.ContentSize);
+                    var sendingThread = new Thread(() => SendAsync(message));
+                    sendingThread.Start();
                 }
                 catch (Exception ex)
                 {
@@ -181,6 +211,13 @@ namespace ShinyChat.Core.Server
                 return true;
             }
             return false;
+        }
+
+        private void SendAsync(IServerMessage message)
+        {
+            // Dirty typecast (OH NOEZ AGAIN)
+            _client.GetStream().Write(message.SerializedMessage, 0, 8 + (int)message.OptionsSize + (int)message.ContentSize);
+            _client.GetStream().Flush();
         }
     }
 }

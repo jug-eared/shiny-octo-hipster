@@ -27,7 +27,12 @@ namespace ShinyChat.Common.Server
         /// <summary>
         /// Enumerable containing all unprocessed messages coming from server
         /// </summary>
-        IEnumerable<IServerMessage> IncomingMessages { get; set; }
+        List<IServerMessage> IncomingMessages { get; set; }
+
+        /// <summary>
+        /// Enumeration of known channels hosted on the server (Need to be refreshed manually)
+        /// </summary>
+        List<IChannel> KnownChannels { get; set; }
 
         /// <summary>
         /// Sends a given IServerMessage to the current server
