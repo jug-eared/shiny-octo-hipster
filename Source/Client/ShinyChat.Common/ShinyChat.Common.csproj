@@ -45,6 +45,7 @@
     <Compile Include="Entities\IInternalIdCounter.cs" />
     <Compile Include="Entities\IServerMessage.cs" />
     <Compile Include="Entities\IMessageLog.cs" />
+    <Compile Include="Logging\ILoggingManager.cs" />
     <Compile Include="Server\IServerSubscriber.cs" />
     <Compile Include="Entities\IViewMessage.cs" />
     <Compile Include="Entities\MessageType.cs" />

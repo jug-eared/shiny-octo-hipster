@@ -1,0 +1,4 @@
+14.09.2013 17:57:53 [Error] An error occurred while trying to connect to the server. - Exception: Ein Verbindungsversuch ist fehlgeschlagen, da die Gegenstelle nach einer bestimmten Zeitspanne nicht richtig reagiert hat, oder die hergestellte Verbindung war fehlerhaft, da der verbundene Host nicht reagiert hat 91.67.100.107:50007 - StackTrace:    bei System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   bei System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   bei System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   bei ShinyChat.Core.Server.ChatServer.OpenConnection() in C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\Server\ChatServer.cs:Zeile 68.

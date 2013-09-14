@@ -20,6 +20,8 @@ using ShinyChat.Core.DI;
 using ShinyChat.Core.Server;
 using System.Net;
 using System.IO;
+using ShinyChat.Core.Logging;
+using System.Threading;
 
 namespace ShinyChat.UI
 {
@@ -35,7 +37,6 @@ namespace ShinyChat.UI
 
             //var channel2 = new Channel() { Name = "HalloChrisiehChannelBla", MessageLog = new MessageLog(), IsOpened = true };
             //var message2 = new MessageBuilder().BuildCommand(Enums.CommandType.JoinChannel, channel2, "jug-eared");
-
             var server = new ChatServer();
             server.Ip = IPAddress.Parse("91.67.100.107");
             server.Port = 50007;
@@ -46,6 +47,8 @@ namespace ShinyChat.UI
             server.SendMessage(message);
             var message2 = new MessageBuilder().BuildServerMessage(channel, "jug-eared", "Heyho was geht so?");
             server.SendMessage(message2);
+            Thread.Sleep(10000);
+            server.CloseConnection();
         }
     }
 }
