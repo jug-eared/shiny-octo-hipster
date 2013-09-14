@@ -1,7 +1,8 @@
 # Represent sent messages / channels / users
 from log import init_log
 import xml.etree.ElementTree as etree
-from channel import Channel, channelList
+from channel import Channel, channelList, channelNames
+from xml_template import xml_options, xml_message
 
 # Logging settings
 log = init_log(__name__)
@@ -165,13 +166,36 @@ class Message:
             pass
 
     def command_get_channels(self, user):
-        pass
+        chNameString = ';'.join(channelNames)
+
+        optionDict = dict(
+            id=self.optionTags['id'],
+            messageType=MESSAGE_TYPE['RESPONSE'],
+            command='',
+            channel='',
+            user=''
+            )
+
+        log.debug(xml_options(optionDict))
+        log.debug(xml_message(chNameString))
+
+        newMsg = Message(xml_options(optionDict), xml_message(chNameString))
+        user.send(newMsg)
 
     def command_get_users(self, user):
-        pass
+        userNames = (user.name for user in channelList[self.optionTags['channel']])
+        userNameString = ';'.joins(userNames)
 
-    def command_user_joins(self, user):
-        pass
+        optionDict = dict(
+            id=self.optionTags['id'],
+            messageType=MESSAGE_TYPE['RESPONSE'],
+            command='',
+            channel=self.optionTags['channel'],
+            user=''
+            )
 
-    def command_user_leaves(self, user):
-        pass
+        log.debug(xml_options(optionDict))
+        log.debug(xml_message(userNameString))
+
+        newMsg = Message(xml_options(optionDict), xml_message(userNameString))
+        user.send(newMsg)

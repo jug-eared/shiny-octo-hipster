@@ -1,6 +1,7 @@
 import threading
 
 channelList = dict()
+channelNames = list()
 
 class Channel:
     def __init__(self, channelName):
@@ -13,6 +14,7 @@ class Channel:
             raise RuntimeError('Channel already exists')
 
         channelList[self.name] = self
+        channelNames.append(self.name)
 
     def subscribe(self, user):
         self.subscribers.add(user)
