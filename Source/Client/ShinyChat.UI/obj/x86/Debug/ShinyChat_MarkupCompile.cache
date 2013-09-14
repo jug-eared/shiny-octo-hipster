@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\App.xaml
-2-1562810139
+4-165184523
 
-7-465760964
+8-2136054275
 16-184924693
-MainWindow.xaml;TestWindow.xaml;
+MainWindow.xaml;Media\Resources.xaml;TestWindow.xaml;Views\SplashView.xaml;
 
 False
 

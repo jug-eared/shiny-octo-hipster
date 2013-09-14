@@ -38,3 +38,7 @@ C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Windsor.xml
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\TestWindow.baml
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\TestWindow.g.cs
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\Views\SplashView.baml
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\App.baml
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\Views\SplashView.g.cs
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\Media\Resources.baml

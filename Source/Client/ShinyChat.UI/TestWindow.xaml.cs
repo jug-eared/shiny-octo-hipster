@@ -60,7 +60,7 @@ namespace ShinyChat
         private void JoinChannelBtn_Click(object sender, RoutedEventArgs e)
         {
             channel = new Channel() { Name = JoinChannelText.Text, MessageLog = new MessageLog(), IsOpened = true };
-            var message = new MessageBuilder().BuildCommand(Enums.CommandType.JoinChannel, channel, "jug-eared");
+            var message = new MessageBuilder().BuildCommand(Enums.CommandType.GetChannels, channel, "jug-eared");
             server.SendMessage(message);
         }
 
