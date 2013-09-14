@@ -1,0 +1,13 @@
+MESSAGE_TYPE = {
+    'UNDEFINED': 0,
+    'MESSAGE': 1,
+    'COMMAND': 2,
+    'RESPONSE': 3
+}
+
+COMMAND_TYPE = {
+    'UNDEFINED': 0,
+    'JOIN_CHANNEL': 1,
+    'LEAVE_CHANNEL': 2,
+    'GET_CHANNELS': 3
+}

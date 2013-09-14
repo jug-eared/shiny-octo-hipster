@@ -9,22 +9,22 @@ class Message:
         self.options = options
         self.message = message
 
-    def from_bytes(self, bytes):
+    def from_bytes(self, bytes_):
         # Reset
         self.options = ''
         self.message = ''
 
         # get sizes for option and message block
-        optionSize = int.from_bytes(bytes[0:4], byteorder='big')
-        messageSize = int.from_bytes(bytes[4:8], byteorder='big')
+        optionSize = int.from_bytes(bytes_[0:4], byteorder='big')
+        messageSize = int.from_bytes(bytes_[4:8], byteorder='big')
 
         # determine startbyte / endbyte
         optionStart, optionEnd = 8, 8 + optionSize
         messageStart, messageEnd = 8 + optionSize, 8 + optionSize + messageSize
 
         # get blocks
-        options = bytes[optionStart:optionEnd]
-        message = bytes[messageStart:messageEnd]
+        options = bytes_[optionStart:optionEnd]
+        message = bytes_[messageStart:messageEnd]
 
         # decode blocks
         self.options = options.decode(encoding='utf-8')
@@ -48,20 +48,3 @@ class Message:
         # execute command, deliver message, broadcast to channel, etc.
         log.debug(self.options)
         log.debug(self.message)
-
-class Channel:
-    def __init__(self):
-        pass
-
-    def subscribe(self, user):
-        pass
-
-    def unsubscribe(self, user):
-        pass
-
-    def broadcast(self, msg):
-        pass
-
-class User:
-    def __init__(self):
-        pass

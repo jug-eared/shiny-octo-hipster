@@ -15,15 +15,15 @@ from message import Message
 log = init_log(__name__)
 
 
-
-HOST = ''           # listen for any hostname
+# listen for any hostname
+HOST = ''
 PORT = 50007
 
 # create IPv4 streaming socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
 s.listen(5)
-# FIXME: Name
+
 
 running = True
 
@@ -42,7 +42,7 @@ def serve_client(sock):
         # msgBuffer processing loop
         while len(msgBuffer) > 0:
             if len(msgBuffer) >= 8:
-                # calculate required length to process buffer
+                # calculate required length to process buffer FIXME: unnecesary calculations
                 optionSize = int.from_bytes(msgBuffer[0:4], byteorder='big')
                 messageSize = int.from_bytes(msgBuffer[4:8], byteorder='big')
                 reqLength = 8 + optionSize + messageSize
