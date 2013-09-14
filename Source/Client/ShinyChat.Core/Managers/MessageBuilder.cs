@@ -20,11 +20,11 @@ namespace ShinyChat.Core.Managers
 
             var optionsHeader = "<options>";
             optionsHeader += "<id>" + resultCommand.Id + "</id>";
-            optionsHeader += "<messageType>" + resultCommand.MessageType + "</messageType>";
-            optionsHeader += "<command>" + resultCommand.CommandType + "</command>";
+            optionsHeader += "<messageType>" + (int)resultCommand.MessageType + "</messageType>";
+            optionsHeader += "<command>" + (int)resultCommand.CommandType + "</command>";
             optionsHeader += commandType == Enums.CommandType.GetChannels ? "<channel></channel>" : "<channel>" + resultCommand.Channel.Name + "</channel>";
             optionsHeader += "<user>" + user + "</user>";
-            optionsHeader += "<options>";
+            optionsHeader += "</options>";
 
             var commandMessage = "<message></message>";
 
@@ -53,11 +53,11 @@ namespace ShinyChat.Core.Managers
 
             var optionsHeader = "<options>";
             optionsHeader += "<id>" + resultCommand.Id + "</id>";
-            optionsHeader += "<messageType>" + resultCommand.MessageType + "</messageType>";
-            optionsHeader += "<command>" + resultCommand.CommandType + "</command>";
+            optionsHeader += "<messageType>" + (int)resultCommand.MessageType + "</messageType>";
+            optionsHeader += "<command>" + (int)resultCommand.CommandType + "</command>";
             optionsHeader += "<channel>" + resultCommand.Channel.Name + "</channel>";
             optionsHeader += "<user>" + user + "</user>";
-            optionsHeader += "<options>";
+            optionsHeader += "</options>";
 
             var commandMessage = "<message></message>";
 
