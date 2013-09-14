@@ -30,6 +30,13 @@ namespace ShinyChat.Common.Server
         IEnumerable<IServerMessage> IncomingMessages { get; set; }
 
         /// <summary>
+        /// Sends a given IServerMessage to the current server
+        /// </summary>
+        /// <param name="message">IServerMessage that is going to be sent to the server</param>
+        /// <returns>Boolean value indicating wether transmission succeeded without errors</returns>
+        bool SendMessage(IServerMessage message);
+
+        /// <summary>
         /// Subscribes an IServerSubscriber to the chat server
         /// </summary>
         /// <param name="subscriber">Subscriber to subscribe the server</param>
