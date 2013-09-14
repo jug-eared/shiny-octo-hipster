@@ -16,6 +16,9 @@ namespace ShinyChat.Common.Entities
             JoinChannel = 1,
             LeaveChannel = 2,
             GetChannels = 3,
+            GetUsers = 4,
+            UserJoined = 5,
+            UserLeaved = 6,
         }
     }
 }

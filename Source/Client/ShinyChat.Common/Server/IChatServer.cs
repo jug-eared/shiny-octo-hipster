@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using ShinyChat.Common.Entities;
 
-namespace ShinyChat.Common
+namespace ShinyChat.Common.Server
 {
     public interface IChatServer
     {
@@ -24,21 +25,21 @@ namespace ShinyChat.Common
         IPEndPoint Endpoint { get; set; }
 
         /// <summary>
-        /// Method that gets executed when a message was received
+        /// Enumerable containing all unprocessed messages coming from server
         /// </summary>
-        AsyncCallback MessageReceived { get; set; }
+        IEnumerable<IServerMessage> IncomingMessages { get; set; }
 
         /// <summary>
-        /// Triggers start of the listener
+        /// Subscribes an IServerSubscriber to the chat server
         /// </summary>
-        /// <returns>Boolean value indicating wether listening could be started without errors</returns>
-        bool StartListen();
+        /// <param name="subscriber">Subscriber to subscribe the server</param>
+        void Subscribe(IServerSubscriber subscriber);
 
         /// <summary>
-        /// Triggers end of the listener
+        /// Unubscribes an IServerSubscriber to the chat server
         /// </summary>
-        /// <returns>Boolean value indicating wether listening could be stopped without errors</returns>
-        bool StopListen();
+        /// <param name="subscriber">Subscriber to unsubscribe the server</param>
+        void Unsubscribe(IServerSubscriber subscriber);
 
         /// <summary>
         /// Opens connection to the server
