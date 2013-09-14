@@ -1,5 +1,6 @@
 # Represent sent messages / channels / users
 from log import init_log
+import xml.etree.ElementTree as etree
 
 # Logging settings
 log = init_log(__name__)
@@ -8,6 +9,7 @@ class Message:
     def __init__(self, options='', message=''):
         self.options = options
         self.message = message
+        self.optionTags = dict()
 
     def from_bytes(self, bytes_):
         # Reset
@@ -29,6 +31,11 @@ class Message:
         # decode blocks
         self.options = options.decode(encoding='utf-8')
         self.message = message.decode(encoding='utf-8')
+
+
+        # Parse XML Options
+        root = etree.fromstring(self.options)
+        self.optionTags = {child.tag: child.text for child in root}
 
     def to_bytes(self):
         # encode blocks
