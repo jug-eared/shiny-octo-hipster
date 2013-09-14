@@ -27,7 +27,7 @@ s.listen(5)
 
 running = True
 
-def serve_client(sock):
+def serve_client(connection, address):
     # Queue of Message objects
     msgQueue = deque()
 
@@ -36,7 +36,7 @@ def serve_client(sock):
 
     # Receive loop
     while True:
-        data = sock.recv(8192)
+        data = connection.recv(8192)
         msgBuffer += data
 
         # msgBuffer processing loop
@@ -77,8 +77,8 @@ def serve_client(sock):
         if not data:  # closed socket returns 0 bytes (False) -> exit while loop
             break
 
-    sock.close()
-    log.debug('Socket closed')
+    connection.close()
+    log.debug(str(address[0]) + ' on port ' + str(address[1]) + 'closed')
 
 while running:
     # accept connection
@@ -87,7 +87,7 @@ while running:
     log.debug(str(address[0]) + ' on port ' + str(address[1]))
 
     # serve client in thread and continue accepting client connections
-    serveThread = threading.Thread(target=serve_client, args=(connection,))
+    serveThread = threading.Thread(target=serve_client, args=(connection, address))
     serveThread.start()
 
 s.close()
