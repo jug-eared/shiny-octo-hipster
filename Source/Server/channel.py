@@ -20,7 +20,11 @@ class Channel:
     def unsubscribe(self, user):
         self.subscribers.remove(user)
 
+    def get_subscribers(self):
+        return self.subscribers
+
     def broadcast(self, msg):
         for user in self.subscribers:
+            # FIXME: Check if socket is alive
             sendThread = threading.Thread(target=user.send, args=(msg,))
             sendThread.start()

@@ -86,8 +86,8 @@ class Message:
 
     def handle(self, user):
         # execute command, deliver message, broadcast to channel, etc.
-        log.debug(self.options)
-        log.debug(self.message)
+        # log.debug(self.options)
+        # log.debug(self.message)
 
         msgType = self.optionTags['messageType']
 
@@ -106,18 +106,14 @@ class Message:
     # Message Handler
 
     def handle_undefined(self, user):
-        log.debug('undefined')
+        log.debug('received Message-Type undefined')
         pass
 
     def handle_message(self, user):
-        log.debug('message')
-
         msgChannel = self.optionTags['channel']
         channelList[msgChannel].broadcast(self)
 
     def handle_command(self, user):
-        log.debug('command')
-
         command = self.optionTags['command']
 
         if command == COMMAND_TYPE['UNDEFINED']:
@@ -145,22 +141,28 @@ class Message:
     # COMMANDS
 
     def command_undefined(self, user):
+        log.debug('received Command undefined')
         pass
 
     def command_join_channel(self, user):
-        log.debug('command join channel')
         channelRequest = self.optionTags['channel']
 
-        if channelRequest in channelList:
-            channelList[channelRequest].subscribe(user)
-            log.debug('subscribed to channel ' + channelRequest)
-        else:
-            log.debug('creating channel:' + channelRequest)
+        if channelRequest not in channelList:
+            log.debug('creating channel: ' + channelRequest)
             Channel(channelRequest)
             channelList[channelRequest].subscribe(user)
 
+        channelList[channelRequest].subscribe(user)
+        log.debug(str(user.IP) + ' subscribed to channel ' + channelRequest)
+
+
     def command_leave_channel(self, user):
-        pass
+        channelRequest = self.optionTags['channel']
+
+        if user in channelList[channelRequest].get_subscribers():
+            channelList[channelRequest].unsubscribe(user)
+        else:
+            pass
 
     def command_get_channels(self, user):
         pass
