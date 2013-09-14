@@ -3,8 +3,6 @@ from message import Message
 from channel import Channel, channelList
 
 
-userPool = set()
-
 class User:
     def __init__(self, connection, address, username=''):
         self.connection = connection
@@ -17,12 +15,9 @@ class User:
         else:
             self.name = username
 
-        userPool.add(self)
-
     def send(self, msg):
-        if self in userPool:
-            data = msg.to_bytes()
-            self.connection.sendall(data)
+        data = msg.to_bytes()
+        self.connection.sendall(data)
 
     def unsubscribe_all(self):
         tempChannels = channelList
