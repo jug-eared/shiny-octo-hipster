@@ -82,5 +82,16 @@ namespace ShinyChat.Core.Managers
             System.Buffer.BlockCopy(b, 0, c, a.Length, b.Length);
             return c;
         }
+
+        private string BytesToString(byte[] arr)
+        {
+            var result = string.Empty;
+            foreach (var byt in arr)
+            {
+                result += byt.ToString("X2");
+            }
+
+            return result;
+        }
     }
 }

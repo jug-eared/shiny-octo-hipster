@@ -2,3 +2,4 @@ C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Common\bin\Debug\Shi
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Common\bin\Debug\ShinyChat.Common.pdb
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Common\obj\Debug\ShinyChat.Common.dll
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Common\obj\Debug\ShinyChat.Common.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Common\obj\Debug\ShinyChat.Common.csprojResolveAssemblyReference.cache

@@ -7,6 +7,9 @@ namespace ShinyChat.Common.Entities
 {
     public partial class Enums
     {
+        /// <summary>
+        /// Gets the MessageType of a message that is sent or received from server
+        /// </summary>
         public enum MessageType
         {
             Undefined = 0,

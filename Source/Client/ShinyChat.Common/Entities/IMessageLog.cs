@@ -7,6 +7,9 @@ namespace ShinyChat.Common.Entities
 {
     public interface IMessageLog
     {
-        List<IViewMessage> Messages { get; set; }
+        /// <summary>
+        /// Gets or sets an enumerable of messages in the message log
+        /// </summary>
+        IEnumerable<IViewMessage> Messages { get; set; }
     }
 }

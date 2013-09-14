@@ -8,7 +8,7 @@ namespace ShinyChat.Core.Entities
 {
     public class MessageLog : IMessageLog
     {
-        public List<IViewMessage> Messages
+        public IEnumerable<IViewMessage> Messages
         {
             get;
             set;
