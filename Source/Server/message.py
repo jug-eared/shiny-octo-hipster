@@ -154,7 +154,6 @@ class Message:
 
         channelList[channelRequest].subscribe(user)
         log.debug(str(user.IP) + ' subscribed to channel ' + channelRequest)
-        log.debug(repr(channelList))
 
 
     def command_leave_channel(self, user):
