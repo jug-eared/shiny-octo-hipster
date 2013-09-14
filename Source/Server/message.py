@@ -17,7 +17,10 @@ COMMAND_TYPE = {
     'UNDEFINED': '0',
     'JOIN_CHANNEL': '1',
     'LEAVE_CHANNEL': '2',
-    'GET_CHANNELS': '3'
+    'GET_CHANNELS': '3',
+    'GET_USER': '4',
+    'USER_JOINS': '5',
+    'USER_LEAVES': '6'
 }
 
 
@@ -80,7 +83,7 @@ class Message:
 
         return retBytes
 
-    def handle(self):
+    def handle(self, connection, address):
         # execute command, deliver message, broadcast to channel, etc.
         log.debug(self.options)
         log.debug(self.message)
@@ -88,28 +91,74 @@ class Message:
         msgType = self.optionTags['messageType']
 
         if msgType == MESSAGE_TYPE['UNDEFINED']:
-            self.handle_undefined()
+            self.handle_undefined(connection, address)
         elif msgType == MESSAGE_TYPE['MESSAGE']:
-            self.handle_message()
+            self.handle_message(connection, address)
         elif msgType == MESSAGE_TYPE['COMMAND']:
-            self.handle_command()
+            self.handle_command(connection, address)
         elif msgType == MESSAGE_TYPE['RESPONSE']:
-            self.handle_response()
+            self.handle_response(connection, address)
         else:
             log.warning('Message type unknown')
 
-    def handle_undefined(self):
+
+    # Message Handler
+
+    def handle_undefined(self, connection, address):
         log.debug('undefined')
         pass
 
-    def handle_message(self):
+    def handle_message(self, connection, address):
         log.debug('message')
         pass
 
-    def handle_command(self):
+    def handle_command(self, connection, address):
         log.debug('command')
+
+        command = self.optionTags['command']
+
+        if command == COMMAND_TYPE['UNDEFINED']:
+            self.command_undefined(connection, address)
+        elif command == COMMAND_TYPE['JOIN_CHANNEL']:
+            self.command_join_channel(connection, address)
+        elif command == COMMAND_TYPE['LEAVE_CHANNEL']:
+            self.command_leave_channel(connection, address)
+        elif command == COMMAND_TYPE['GET_CHANNELS']:
+            self.command_get_channels(connection, address)
+        elif command == COMMAND_TYPE['GET_USER']:
+            self.command_get_users(connection, address)
+        elif command == COMMAND_TYPE['USER_JOINS']:
+            self.command_user_joins(connection, address)
+        elif command == COMMAND_TYPE['USER_LEAVES']:
+            self.command_user_leaves(connection, address)
+        else:
+            log.warning('unknown command')
+
+    def handle_response(self, connection, address):
+        log.debug('response')
         pass
 
-    def handle_response(self):
-        log.debug('response')
+
+    # COMMANDS
+
+    def command_undefined(self, connection, address):
+        pass
+
+    def command_join_channel(self, connection, address):
+        log.debug('command join channel')
+        pass
+
+    def command_leave_channel(self, connection, address):
+        pass
+
+    def command_get_channels(self, connection, address):
+        pass
+
+    def command_get_users(self, connection, address):
+        pass
+
+    def command_user_joins(self, connection, address):
+        pass
+
+    def command_user_leaves(self, connection, address):
         pass

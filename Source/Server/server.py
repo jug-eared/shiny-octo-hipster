@@ -69,7 +69,7 @@ def serve_client(connection, address):
                 msg = msgQueue.popleft()
 
                 # start thread to process message
-                processMsg = threading.Thread(target=msg.handle)
+                processMsg = threading.Thread(target=msg.handle, args=(connection, address))
                 processMsg.start()
             else:
                 break

@@ -1,7 +1,16 @@
+channelList = dict()
+
 class Channel:
     def __init__(self, channelName):
         self.name = channelName
         self.subscribers = set()
+
+        global channelList
+
+        if self.name in channelList:
+            raise RuntimeError('Channel already exists')
+
+        channelList[self.name] = self
 
     def subscribe(self, user):
         self.subscribers.add(user)
@@ -10,4 +19,5 @@ class Channel:
         self.subscribers.remove(user)
 
     def broadcast(self, msg):
-        pass
+        for user in subscribers:
+            user.send(msg)
