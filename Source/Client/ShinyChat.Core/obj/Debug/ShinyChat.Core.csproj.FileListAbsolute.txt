@@ -12,3 +12,9 @@ C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Shiny
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Core.pdb
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Common.dll
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\ShinyChat.Common.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Windsor.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Core.xml
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Windsor.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.Core\bin\Debug\Castle.Windsor.xml

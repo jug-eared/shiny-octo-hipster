@@ -30,3 +30,9 @@ C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\Shi
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\ShinyChat.UI.csproj.GenerateResource.Cache
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\ShinyChat.exe
 C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\obj\x86\Debug\ShinyChat.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Core.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Windsor.dll
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Core.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Core.xml
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Windsor.pdb
+C:\GIT_Entwicklung\ClientServerChat\Source\Client\ShinyChat.UI\bin\Debug\Castle.Windsor.xml

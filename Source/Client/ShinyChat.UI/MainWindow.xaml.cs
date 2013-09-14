@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 using ShinyChat.Core.Entities;
 using ShinyChat.Core.Managers;
 using ShinyChat.Common.Entities;
+using ShinyChat.Dependencies;
+using Castle.Windsor;
+using ShinyChat.Core.DI;
 
 namespace ShinyChat.UI
 {
@@ -25,10 +28,7 @@ namespace ShinyChat.UI
         public MainWindow()
         {
             InitializeComponent();
-            var chan = new Channel();
-            chan.Name = "Testchannel";
-            var msgBuilder = new MessageBuilder();
-            var testMessageYo = msgBuilder.BuildCommand(0, Enums.CommandType.JoinChannel, chan, "jug-eared");
+            DependenciesBootstrapper.Init();
         }
     }
 }
