@@ -1,7 +1,9 @@
 import socket
 from socketserver import BaseRequestHandler
+from threading import Thread
 
-from Core.MessageBuffer import MessageBuffer
+from Core.Message.MessageBuffer import MessageBuffer
+from Core.User import User
 
 
 class RequestHandler(BaseRequestHandler):
@@ -11,6 +13,10 @@ class RequestHandler(BaseRequestHandler):
     def handle(self):
         self.request.settimeout(5)
         
+        # Create User        
+        newUser = User(self.request, self.client_address)
+        
+        # Create Buffer        
         msgBuffer = MessageBuffer()
         
         while self._running:
@@ -26,10 +32,11 @@ class RequestHandler(BaseRequestHandler):
             if not data: break
                         
             msgBuffer.append(data)
-            
             msg = msgBuffer.poll()
+            
             if msg != None:
-                print('polled message')
+                processMsg = Thread(target=msg.handle, args=(newUser,), daemon=True)
+                processMsg.start()
             
     def finish(self):
         pass  # Add Cleanup
