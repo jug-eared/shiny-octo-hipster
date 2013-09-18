@@ -1,7 +1,7 @@
 import socket
 from socketserver import BaseRequestHandler
 from threading import Thread
-
+from Core.Message.MessageHandler import handle
 from Core.Message.MessageBuffer import MessageBuffer
 from Core.User import User
 
@@ -35,8 +35,9 @@ class RequestHandler(BaseRequestHandler):
             msg = msgBuffer.poll()
             
             if msg != None:
-                processMsg = Thread(target=msg.handle, args=(newUser,), daemon=True)
+                processMsg = Thread(target=handle, args=(msg, newUser), daemon=True)
                 processMsg.start()
+                pass
         
         newUser.unsubscribe_all()
             

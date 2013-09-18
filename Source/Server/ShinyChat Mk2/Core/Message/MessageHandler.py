@@ -1,85 +1,98 @@
 from Core.Constants.MessageType import MessageType
 from Core.Constants.Command import Command
+from Core.Message.Message import Message
 from Core.Channel import Channel
+from Core.Utility.XMLHelper import xml_options, xml_message
 
-class MessageHandler:
-    def handle(self, user):
-        msgType = self.optionTags['messageType']
-        
-        if msgType == MessageType.UNDEFINED:
-            self.handle_undefined(user)
-        elif msgType == MessageType.MESSAGE:
-            self.handle_message(user)
-        elif msgType == MessageType.COMMAND:
-            self.handle_command(user)
-        elif msgType == MessageType.RESPONSE:
-            self.handle_response(user)
-        else:
-            pass
+
+def handle(message, user):
+    msgType = message.optionTags['messageType']
     
-    
-    # Handlers for different message-types    
-    def handle_undefined(self, user):
+    if msgType == MessageType.UNDEFINED:
+        handle_undefined(message, user)
+    elif msgType == MessageType.MESSAGE:
+        handle_message(message, user)
+    elif msgType == MessageType.COMMAND:
+        handle_command(message, user)
+    elif msgType == MessageType.RESPONSE:
+        handle_response(message, user)
+    else:
         pass
+
+
+# Handlers for different message-types    
+def handle_undefined(message, user):
+    pass
+
+def handle_message(message, user):
+    msgChannel = message.optionTags['channel']
+    print(message.message)
+    Channel._channelList[msgChannel].broadcast(message)
     
-    def handle_message(self, user):
-        msgChannel = self.optionTags['channel']
-        print(self.message)
-        Channel._channelList[msgChannel].broadcast(self)
-        
-    def handle_command(self, user):
-        cmd = self.optionTags['command']
-        
-        if cmd == Command.UNDEFINED:
-            self.cmd_undefined(user)
-        elif cmd == Command.JOIN_CHANNEL:
-            self.cmd_join_channel(user)
-        elif cmd == Command.LEAVE_CHANNEL:
-            self.cmd_leave_channel(user)
-        elif cmd == Command.GET_CHANNELS:
-            self.cmd_get_channels(user)
-        elif cmd == Command.GET_USER:
-            self.cmd_get_user(user)
-        elif cmd == Command.USER_JOINS:
-            self.cmd_user_joins(user)
-        elif cmd == Command.USER_LEAVES:
-            self.cmd_user_leaves(user)
-        else:
-            pass
+def handle_command(message, user):
+    cmd = message.optionTags['command']
     
-    def handle_response(self, user):
+    if cmd == Command.UNDEFINED:
+        cmd_undefined(message, user)
+    elif cmd == Command.JOIN_CHANNEL:
+        cmd_join_channel(message, user)
+    elif cmd == Command.LEAVE_CHANNEL:
+        cmd_leave_channel(message, user)
+    elif cmd == Command.GET_CHANNELS:
+        cmd_get_channels(message, user)
+    elif cmd == Command.GET_USER:
+        cmd_get_user(message, user)
+    elif cmd == Command.USER_JOINS:
+        cmd_user_joins(message, user)
+    elif cmd == Command.USER_LEAVES:
+        cmd_user_leaves(message, user)
+    else:
         pass
+
+def handle_response(message, user):
+    pass
+
+
+#Handlers for commands
+def cmd_undefined(message, user):
+    pass
+
+def cmd_join_channel(message, user):
+    channelName = message.optionTags['channel']
     
+    if channelName not in Channel._channelList:
+        newChannel = Channel(channelName)
     
-    #Handlers for commands
-    def cmd_undefined(self, user):
+    newChannel.subscribe(user)        
+
+def cmd_leave_channel(message, user):
+    channelName = message.optionTags['channel']
+    channel = Channel._channelList[channelName]
+    
+    if user in channel.subscibers:
+        channel.unsubscribe(user)
+    else:
         pass
+
+def cmd_get_channels(message, user):
+    nameString = ';'.join(Channel.name_list())
     
-    def cmd_join_channel(self, user):
-        channelName = self.optionTags['channel']
-        
-        if channelName not in Channel._channelList:
-            newChannel = Channel(channelName)
-        
-        newChannel.subscribe(user)        
+    optionMap = dict(identifier = message.optionTags['id'],
+                     messageType = MessageType.RESPONSE,
+                     command = '',
+                     channel = '',
+                     user = '')
     
-    def cmd_leave_channel(self, user):
-        channelName = self.optionTags['channel']
-        channel = Channel._channelList[channelName]
-        
-        if user in channel.subscibers:
-            channel.unsubscribe(user)
-        else:
-            pass
+    messageMap = dict(message = nameString)
     
-    def cmd_get_channels(self, user):
-        pass
-    
-    def cmd_get_user(self, user):
-        pass
-    
-    def cmd_user_joins(self, user):
-        pass
-    
-    def cmd_user_leaves(self, user):
-        pass
+    newMsg = Message(xml_options(optionMap), xml_message(messageMap))
+    user.send(newMsg)
+
+def cmd_get_user(message, user):
+    pass
+
+def cmd_user_joins(message, user):
+    pass
+
+def cmd_user_leaves(message, user):
+    pass

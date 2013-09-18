@@ -4,6 +4,11 @@ from threading import Thread
 class Channel:
     _channelList = dict()
     
+    @staticmethod
+    def name_list():
+        return [key for key, _ in Channel._channelList]
+    
+
     def __init__(self, channelName):#
         self.name = channelName
         self.subscribers = set()

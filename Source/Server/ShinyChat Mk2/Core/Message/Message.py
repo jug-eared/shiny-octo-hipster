@@ -1,7 +1,6 @@
-from Core.Message.MessageHandler import MessageHandler
 from Core.Utility.XMLHelper import parse, get_roottext
 
-class Message(MessageHandler):
+class Message:
     def __init__(self, options='', message=''):
         self.options = options
         self.message = message
