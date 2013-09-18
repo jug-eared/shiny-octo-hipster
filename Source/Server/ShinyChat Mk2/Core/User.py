@@ -17,5 +17,5 @@ class User:
         self.connection.sendall(data)
         
     def unsubscribe_all(self):
-        for channel in self.subscriptions:
+        for channel in set(self.subscriptions):
             channel.unsubscribe(self)

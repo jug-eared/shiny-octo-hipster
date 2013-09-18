@@ -21,3 +21,7 @@ def xml_message(mapping):
 def parse(xmlString):
     root = ET.fromstring(xmlString)
     return {child.tag: child.text for child in root}
+
+def get_roottext(xmlString):
+    root = ET.fromstring(xmlString)
+    return root.text

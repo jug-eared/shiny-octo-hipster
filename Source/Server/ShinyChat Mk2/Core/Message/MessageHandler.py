@@ -24,6 +24,7 @@ class MessageHandler:
     
     def handle_message(self, user):
         msgChannel = self.optionTags['channel']
+        print(self.message)
         Channel._channelList[msgChannel].broadcast(self)
         
     def handle_command(self, user):

@@ -1,12 +1,15 @@
 from Core.Message.MessageHandler import MessageHandler
-from Core.Utility.XMLHelper import parse
+from Core.Utility.XMLHelper import parse, get_roottext
 
 class Message(MessageHandler):
     def __init__(self, options='', message=''):
         self.options = options
         self.message = message
+        
+        # empty dictionary if message has no children <message>text</message>
         self.optionTags = dict()
         self.messageTags = dict()
+        self.messageText = ''
         
         self.parse_tags()
         
@@ -54,3 +57,4 @@ class Message(MessageHandler):
         
         if self.message != '':
             self.messageTags = parse(self.message)
+            self.messageText = get_roottext(self.message)
