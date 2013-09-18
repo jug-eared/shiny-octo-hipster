@@ -1,6 +1,11 @@
 from Core.Utility.XMLHelper import parse, get_roottext
 
 class Message:
+    '''Holds message data and implements necessary transformations
+    
+    create Message from bytes
+    convert Message to bytes
+    '''
     def __init__(self, options='', message=''):
         self.options = options
         self.message = message

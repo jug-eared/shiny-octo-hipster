@@ -2,11 +2,15 @@ from threading import Thread
 
 
 class Channel:
+    '''Manages Channel-Subscribers/Broadcasts
+    
+    name_list() returns a list of all channels
+    '''
     _channelList = dict()
     
     @staticmethod
     def name_list():
-        return [key for key, _ in Channel._channelList]
+        return (key for key, _ in Channel._channelList)
     
 
     def __init__(self, channelName):#

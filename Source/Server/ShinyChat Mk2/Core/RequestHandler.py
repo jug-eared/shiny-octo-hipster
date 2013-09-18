@@ -1,16 +1,26 @@
 import socket
 from socketserver import BaseRequestHandler
 from threading import Thread
-from Core.Message.MessageHandler import handle
+
+import Core.Message.MessageHandler as MessageHandler
 from Core.Message.MessageBuffer import MessageBuffer
 from Core.User import User
 
 
 class RequestHandler(BaseRequestHandler):
+    '''Handles connections from the ThreadingTCPServer
+    
+    setup for initialization
+    finish for cleanup
+    '''
     def setup(self):
         self._running = True
         
     def handle(self):
+        '''Processes incoming messages
+        
+        starts new daemon-thread for each message
+        '''
         self.request.settimeout(5)
         
         # Create User        
@@ -35,7 +45,8 @@ class RequestHandler(BaseRequestHandler):
             msg = msgBuffer.poll()
             
             if msg != None:
-                processMsg = Thread(target=handle, args=(msg, newUser), daemon=True)
+                processMsg = Thread(target=MessageHandler.handle,
+                                    args=(msg, newUser), daemon=True)
                 processMsg.start()
                 pass
         

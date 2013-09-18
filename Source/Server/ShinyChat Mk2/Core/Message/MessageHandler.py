@@ -5,6 +5,7 @@ from Core.Channel import Channel
 from Core.Utility.XMLHelper import xml_options, xml_message
 
 
+# Entry point for MessageHandler
 def handle(message, user):
     msgType = message.optionTags['messageType']
     
@@ -26,7 +27,7 @@ def handle_undefined(message, user):
 
 def handle_message(message, user):
     msgChannel = message.optionTags['channel']
-    print(message.message)
+    print(message.messageText)
     Channel._channelList[msgChannel].broadcast(message)
     
 def handle_command(message, user):
@@ -89,7 +90,22 @@ def cmd_get_channels(message, user):
     user.send(newMsg)
 
 def cmd_get_user(message, user):
-    pass
+    if message.optionTags['channel'] in Channel._channelList:
+        channel = Channel._channelList[message.optionTags['channel']]
+        nameString = ';'.join(channel.get_subscribers())
+    else:
+        nameString = ''
+        
+    optionMap = dict(identifier = message.optionTags['id'],
+                     messageType = MessageType.RESPONSE,
+                     command = '',
+                     channel = message.optionTags['channel'],
+                     user = '')
+    
+    messageMap = dict(message = nameString)
+    
+    newMsg = Message(xml_options(optionMap), xml_message(messageMap))
+    user.send(newMsg)
 
 def cmd_user_joins(message, user):
     pass
