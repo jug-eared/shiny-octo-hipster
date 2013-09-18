@@ -1,5 +1,6 @@
 from Core.Constants.MessageType import MessageType
 from Core.Constants.Command import Command
+from Core.Channel import Channel
 
 class MessageHandler:
     def handle(self, user):
@@ -22,8 +23,9 @@ class MessageHandler:
         pass
     
     def handle_message(self, user):
-        pass
-    
+        msgChannel = self.optionTags['channel']
+        Channel._channelList[msgChannel].broadcast(self)
+        
     def handle_command(self, user):
         cmd = self.optionTags['command']
         
@@ -53,10 +55,21 @@ class MessageHandler:
         pass
     
     def cmd_join_channel(self, user):
-        pass
+        channelName = self.optionTags['channel']
+        
+        if channelName not in Channel._channelList:
+            newChannel = Channel(channelName)
+        
+        newChannel.subscribe(user)        
     
     def cmd_leave_channel(self, user):
-        pass
+        channelName = self.optionTags['channel']
+        channel = Channel._channelList[channelName]
+        
+        if user in channel.subscibers:
+            channel.unsubscribe(user)
+        else:
+            pass
     
     def cmd_get_channels(self, user):
         pass

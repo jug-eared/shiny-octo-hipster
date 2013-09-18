@@ -1,18 +1,33 @@
+from threading import Thread
+
+
 class Channel:
-    _channelList = set()
-    _channelNames = set()
+    _channelList = dict()
     
-    def __init__(self, channelName):
-        pass
+    def __init__(self, channelName):#
+        self.name = channelName
+        self.subscribers = set()
+        
+        if self.name in Channel._channelList:
+            raise RuntimeError('Channel already exists')
+        else:
+            Channel._channelList[self.name] = self
     
     def subscribe(self, user):
-        pass
+        if user not in self.subscribers:
+            self.subscribers.add(user)
+            user.subscriptions.add(self)
     
     def unsubscribe(self, user):
-        pass
+        if user in self.subscribers:
+            self.subscribers.remove(user)
+            user.subscriptions.remove(self)
     
     def get_subscribers(self):
-        pass
+        return self.subscribers
     
-    def broadcast(self):
-        pass
+    def broadcast(self, message):
+        for user in self.subscribers:
+            # FIXME: Chef if socket is alive / cleanup if it's not
+            sendThread = Thread(target=user.send, args=(message,))
+            sendThread.start()

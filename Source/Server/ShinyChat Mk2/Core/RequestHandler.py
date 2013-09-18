@@ -37,6 +37,8 @@ class RequestHandler(BaseRequestHandler):
             if msg != None:
                 processMsg = Thread(target=msg.handle, args=(newUser,), daemon=True)
                 processMsg.start()
+        
+        newUser.unsubscribe_all()
             
     def finish(self):
         pass  # Add Cleanup
